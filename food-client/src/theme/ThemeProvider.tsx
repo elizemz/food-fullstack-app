@@ -6,12 +6,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from "./theme";
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
-	return (
-		<AppRouterCacheProvider>
-			<MuiThemeProvider theme={theme}>
-				<CssBaseline />
-				{children}
-			</MuiThemeProvider>
-		</AppRouterCacheProvider>
-	);
+  return (
+    <AppRouterCacheProvider>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </MuiThemeProvider>
+    </AppRouterCacheProvider>
+  );
 };
