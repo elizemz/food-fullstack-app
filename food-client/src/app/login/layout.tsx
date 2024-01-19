@@ -1,9 +1,8 @@
-import "./scss/globals.scss";
 import { ThemeProvider } from "@/theme";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
-export default function RootLayout({
+export default function LoginLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -11,7 +10,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Header />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
