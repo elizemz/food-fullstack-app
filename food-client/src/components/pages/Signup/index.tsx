@@ -26,7 +26,7 @@ const SignupPage = () => {
           gutterBottom
           sx={{ fontSize: "28px", fontWeight: "700" }}
         >
-          Нэвтрэх
+          Бүртгүүлэх
         </Typography>
         <Stack width="100%" sx={{ mb: "2rem" }}>
           <Input label="Нэр" />

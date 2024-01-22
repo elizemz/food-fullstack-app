@@ -28,7 +28,7 @@ const LoginPage = () => {
         >
           Нэвтрэх
         </Typography>
-        <Stack width="100%" sx={{ mb: "2rem" }}>
+        <Stack width="100%" sx={{ mb: "1rem" }}>
           <Input label="Имэйл" />
           <Input label="Нууц үг" showPassword />
           {/* <Button label="Нууц үг сэргээх" btnType="text" /> */}
