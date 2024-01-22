@@ -1,26 +1,39 @@
-import { Button as MuiButton, Stack, darken } from "@mui/material";
+"use client";
+import { Button as MuiButton, Stack } from "@mui/material";
 import { ReactNode } from "react";
 
 interface IButtonProps {
-    label: ReactNode;
-    disabled?: boolean;
-    onClick?: () => void;
+  label: ReactNode;
+  disabled?: boolean;
+  btnType?: "contained" | "outlined" | "text";
+  onClick?: () => void;
 }
 
-export const Button = ({label, disabled = false, onClick}) => {
+export const Button = ({
+  label,
+  disabled = false,
+  btnType = "contained",
+  onClick,
+}: IButtonProps) => {
   return (
-    <Stack gap={1}>
-      <MuiButton onClick={onClick} sx={{
-        p: 3,
-        border: 1,
-        borderColor: "divider",
-        background: "#18BA51",
-        "&:hover:"{
-            background: "#18BA51",
-            opacity: "0.75",
-        },
-      }}
-      >{label}</MuiButton>
+    <Stack>
+      <MuiButton
+        onClick={onClick}
+        color="primary"
+        variant={btnType}
+        sx={{
+          p: 4,
+          fontSize: "1rem",
+          color:
+            btnType === "outlined" || btnType === "text" ? "#18ba51" : "white",
+          border: btnType === "outlined" ? 1 : 0,
+          borderColor: btnType === "outlined" ? "#18ba51" : "",
+        }}
+        disabled={disabled}
+        size="medium"
+      >
+        {label}
+      </MuiButton>
     </Stack>
   );
 };
