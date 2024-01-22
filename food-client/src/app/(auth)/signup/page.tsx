@@ -8,4 +8,4 @@ const SignupPage = () => {
   );
 };
 
-export default Page;
+export default SignupPage;
