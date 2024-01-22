@@ -3,7 +3,7 @@
 import { Button } from "@/components/core/Button";
 import { Input } from "@/components/core/Input";
 import { Box, Container, Stack, Typography } from "@mui/material";
-
+import Link from "next/link";
 import React from "react";
 
 const LoginPage = () => {
@@ -18,7 +18,7 @@ const LoginPage = () => {
           margin: "auto ",
           px: "2.1rem",
           maxWidth: "450px",
-          height: "calc(100vh - 90px)",
+          height: "calc(72vh - 90px)",
         }}
       >
         <Typography
@@ -32,8 +32,9 @@ const LoginPage = () => {
           <Input label="Имэйл" />
           <Input label="Нууц үг" showPassword />
           {/* <Button label="Нууц үг сэргээх" btnType="text" /> */}
-          <Typography variant="button" align="right">
-            Нууц үг сэргээх
+          <Typography variant="button" align="right" sx={{ mt: "1rem" }}>
+            {" "}
+            <Link href="/newpass1">Нууц үг сэргээх </Link>
           </Typography>
         </Stack>
 
@@ -44,7 +45,9 @@ const LoginPage = () => {
           <Typography>Эсвэл</Typography>
         </Stack>
         <Stack flex="row" width="100%" justifyContent="flex-end">
-          <Button label="Бүртгүүлэх" btnType="outlined" />
+          <Link href="/signup" style={{ textDecoration: "none" }}>
+            <Button label="Бүртгүүлэх" btnType="outlined" />
+          </Link>
         </Stack>
       </Box>
     </Container>

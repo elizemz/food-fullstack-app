@@ -16,7 +16,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { Pinecone } from "@/components/Logos";
+import { Pinecone, BasketLogo, UserLogo } from "@/components/Logos";
 
 const pages = ["НҮҮР", "ХООЛНЫ ЦЭС", "ХҮРГЭЛТИЙН БҮС"];
 const settings = ["Профайл", "Аккоунт", "Дашбоард", "Гарах"];
@@ -175,6 +175,7 @@ export default function Header() {
                   <Avatar alt="Remy Sharp" src="" />
                 </IconButton>
               </Tooltip>
+              <BasketLogo />
               <Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"

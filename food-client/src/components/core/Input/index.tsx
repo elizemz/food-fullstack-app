@@ -26,7 +26,7 @@ export const Input = ({
   const [isShowPassword, setIsShowPassword] = useState(showPassword);
   return (
     <>
-      <FormControl sx={{ my: "1rem" }} variant="outlined" fullWidth>
+      <FormControl sx={{ mt: "1rem" }} variant="outlined" fullWidth>
         <FormLabel sx={{ my: "4px", color: "black" }}>{label}</FormLabel>
         <OutlinedInput
           sx={{ backgroundColor: "#F7F7F8" }}
