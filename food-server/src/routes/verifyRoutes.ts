@@ -3,6 +3,6 @@ import { sendEmailToUser } from "../controller/verifyController";
 
 const router = Router();
 
-router.route("/send-email").post(sendEmailToUser);
+router.route("/sendemail").post(sendEmailToUser);
 
 export default router;

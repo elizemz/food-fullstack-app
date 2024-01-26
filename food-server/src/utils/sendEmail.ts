@@ -1,21 +1,22 @@
 import nodemailer from "nodemailer";
 
 const transport = nodemailer.createTransport({
-  host: "gmail",
+  service: "gmail",
+  host: "smtp.gmail.com",
   port: 465,
-  secure: true,
+  secure: false,
   auth: {
-    user: "REPLACE-WITH-YOUR-ALIAS@YOURDOMAIN.COM",
-    pass: "REPLACE-WITH-YOUR-GENERATED-PASSWORD",
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
 export const sendEmail = async (email: string, subject: string) => {
-  const info = await transport.sendMail({
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject,
-    text: "Hello world",
+  await transport.sendMail({
+    from: process.env.EMAIL_USER, // sender address
+    to: email, // list of receivers
+    subject, // Subject line
+    text: "Hello world", // plain text body
     html: generateTemplate(email),
   });
 };
