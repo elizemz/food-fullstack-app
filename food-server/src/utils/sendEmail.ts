@@ -14,8 +14,18 @@ export const sendEmail = async (email: string, subject: string) => {
   const info = await transport.sendMail({
     from: process.env.EMAIL_USER,
     to: email,
-    subject: "Hello ✔", // Subject line
-    text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>", // html body
+    subject,
+    text: "Hello world",
+    html: generateTemplate(email),
   });
+};
+
+const generateTemplate = (name: string) => {
+  return `
+    <div>
+        <h2>Hello ${name}</h2>
+        <h1>Welcome to our platform!</h1>
+        <p>Please click on the following link to verify your account.</p>
+        <a href="https://www.google.com">Verify account</a>
+    </div>`;
 };
