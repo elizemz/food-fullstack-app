@@ -1,24 +1,29 @@
-"use client";
 import { Button as MuiButton, Stack } from "@mui/material";
-import { ReactNode } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 interface IButtonProps {
-  label: ReactNode;
+  label: string;
   disabled?: boolean;
+  loading?: boolean;
   btnType?: "contained" | "outlined" | "text";
   onClick?: () => void;
+  href?: string;
 }
 
 export const Button = ({
   label,
   disabled = false,
+  loading = false,
   btnType = "contained",
   onClick,
+  href,
 }: IButtonProps) => {
   return (
     <Stack>
       <MuiButton
+        href={href}
         onClick={onClick}
+        color="primary"
         variant={btnType}
         sx={{
           p: 4,

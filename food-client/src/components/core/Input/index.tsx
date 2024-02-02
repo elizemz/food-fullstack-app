@@ -9,27 +9,39 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  FormHelperText,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Formik } from "formik";
 
 interface IInputProps {
+  name: string;
   label: string;
-  showPassword: boolean;
+  errorText?: string | undefined;
+  value?: string;
+  showPassword?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = ({
+  name,
   label,
+  errorText,
+  value,
   showPassword = false,
   onChange,
 }: IInputProps) => {
   const [isShowPassword, setIsShowPassword] = useState(showPassword);
+
   return (
     <>
-      <FormControl sx={{ mt: "1rem" }} variant="outlined" fullWidth>
+      <FormControl sx={{ my: "1rem" }} variant="outlined" fullWidth>
         <FormLabel sx={{ my: "4px", color: "black" }}>{label}</FormLabel>
         <OutlinedInput
-          sx={{ backgroundColor: "#F7F7F8" }}
+          name={name}
+          value={value}
+          onChange={onChange}
+          sx={{ backgroundColor: "#ECEDF0" }}
           placeholder={label}
           type={isShowPassword ? "password" : "text"}
           endAdornment={
@@ -46,6 +58,9 @@ export const Input = ({
             )
           }
         />
+        <FormHelperText error={errorText ? true : false}>
+          {errorText}
+        </FormHelperText>
       </FormControl>
     </>
   );

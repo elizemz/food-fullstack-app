@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+
 import User from "../model/user";
 
 export const getUsers = async (req: Request, res: Response) => {
@@ -10,6 +11,7 @@ export const getUsers = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(400).json({
       message: "There was an error during the process.",
+      error,
     });
   }
 };

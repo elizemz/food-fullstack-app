@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import bcrypt from "bcrypt";
 
 const userSchema = new Schema({
   name: {
@@ -20,6 +19,10 @@ const userSchema = new Schema({
   avatarUrl: {
     type: String,
   },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
   address: {
     khoroo: { type: String },
     street: { type: String },
@@ -29,15 +32,14 @@ const userSchema = new Schema({
     type: ["admin", "user", "moderator"],
     default: "user",
   },
+  otp: {
+    type: String,
+    default: "",
+  },
   createdAt: {
     type: Date,
     default: new Date(),
   },
-});
-
-userSchema.pre("save", async function async() {
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
 });
 
 const User = model("User", userSchema);

@@ -1,12 +1,17 @@
-"use client";
-
 import { Button } from "@/components/core/Button";
 import { Input } from "@/components/core/Input";
 import { Box, Container, Stack, Typography } from "@mui/material";
+import { useFormik } from "formik";
+import React, { ChangeEvent } from "react";
+import { object, string } from "yup";
 
-import React from "react";
+interface IStepProps {
+  email: string;
+  handleNext: () => void;
+  handleChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
+}
 
-const NewpassNew = () => {
+const StepOne = ({ email, handleNext, handleChangeInput }: IStepProps) => {
   return (
     <Container>
       <Box
@@ -18,26 +23,23 @@ const NewpassNew = () => {
           margin: "auto ",
           px: "2.1rem",
           maxWidth: "450px",
-          height: "calc(63vh - 90px)",
+          padding: "5rem 0",
         }}
       >
         <Typography
           align="center"
           gutterBottom
-          sx={{ fontSize: "28px", fontWeight: "700", mb: "48px" }}
+          sx={{ fontSize: "28px", fontWeight: "700" }}
         >
-          Шинэ нууц үг зохиох
+          Нууц үг сэргээх
         </Typography>
-        <Stack width="100%" sx={{ mb: "48px" }}>
-          <Input label="Нууц үг" showPassword />
-          <Input label="Нууц үг давтах" showPassword />
-        </Stack>
+        <Input label="Имэйл" onChange={handleChangeInput} name="email" />
         <Stack flex="row" width="100%" justifyContent="flex-end">
-          <Button label="Үргэжлүүлэх" btnType="outlined" />
+          <Button label={"Үргэлжлүүлэх"} onClick={handleNext} />
         </Stack>
       </Box>
     </Container>
   );
 };
 
-export default NewpassNew;
+export default StepOne;
