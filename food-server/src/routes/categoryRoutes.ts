@@ -9,8 +9,13 @@ import {
 
 const router = Router();
 
-router.route("/").get(getAllCategory).post(createCategory);
+router
+  .route("/")
+  .get(getAllCategory)
+  .post(createCategory)
+  .put(updateCategory)
+  .delete(deleteCategory);
 
-router.route("/").get(getCategory).put(updateCategory).delete(deleteCategory);
+router.route("/").get(getCategory);
 
 export default router;

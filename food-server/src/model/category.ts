@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 const categorySchema = new Schema({
   name: {
     type: String,
-    require: [true, "Category name must be named."],
+    require: [true, "Category must be named."],
     unique: true,
     maxLength: [30, "Category name cannot have more than 30 characters."],
   },
