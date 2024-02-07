@@ -11,7 +11,7 @@ import foodRoutes from "./routes/foodRoutes";
 import userRoutes from "./routes/userRoutes";
 import uploadRoutes from "./routes/uploadRoutes";
 import verifyRoutes from "./routes/verifyRoutes";
-import errorHandler from "./middlewear/errorHandler";
+import errorHandler from "./middleware/errorHandler";
 
 const MONGO_URI = process.env.MONGO_URI as string;
 

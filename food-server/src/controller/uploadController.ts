@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../model/user";
 import { sendEmail } from "../utils/sendEmail";
-import errorHandler from "../middlewear/errorHandler";
+import errorHandler from "../middleware/errorHandler";
 import MyError from "../utils/myError";
 import cloudinary from "../utils/cloudinary";
 

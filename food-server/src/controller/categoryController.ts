@@ -3,9 +3,10 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../model/user";
 import { sendEmail } from "../utils/sendEmail";
-import errorHandler from "../middlewear/errorHandler";
+import errorHandler from "../middleware/errorHandler";
 import MyError from "../utils/myError";
 import Category from "../model/category";
+import { IReq } from "../utils/interface";
 
 export const createCategory = async (
   req: Request,
@@ -45,10 +46,11 @@ export const getCategory = async (
 };
 
 export const getAllCategory = async (
-  req: Request,
+  req: IReq,
   res: Response,
   next: NextFunction
 ) => {
+  console.log("USER", req.user);
   try {
     const categories = await Category.find();
 

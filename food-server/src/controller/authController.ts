@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../model/user";
 import { sendEmail } from "../utils/sendEmail";
-import errorHandler from "../middlewear/errorHandler";
+import errorHandler from "../middleware/errorHandler";
 import MyError from "../utils/myError";
 
 export const signup = async (req: Request, res: Response) => {
@@ -60,7 +60,14 @@ export const login = async (
       process.env.JWT_PRIVATE_KEY as string,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
-    res.status(201).json({ message: "User successfully logged in.", token });
+
+    const { ...otherParams } = user;
+
+    res.status(201).json({
+      message: "User successfully logged in.",
+      token,
+      user: otherParams,
+    });
   } catch (error) {
     next(error);
   }

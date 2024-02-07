@@ -1,21 +1,25 @@
 import { Router } from "express";
 import {
   createCategory,
-  getCategory,
-  getAllCategory,
-  updateCategory,
   deleteCategory,
+  getAllCategory,
+  getCategory,
+  updateCategory,
 } from "../controller/categoryController";
+import { upload } from "../utils/multer";
+import { authenticate } from "../middleware/auth";
 
 const router = Router();
 
 router
   .route("/")
-  .get(getAllCategory)
-  .post(createCategory)
+  .get(authenticate, getAllCategory)
+  .post(upload.single("image"), createCategory);
+
+router
+  .route("/:categoryId")
+  .get(getCategory)
   .put(updateCategory)
   .delete(deleteCategory);
-
-router.route("/").get(getCategory);
 
 export default router;
