@@ -1,7 +1,10 @@
+import { Header } from "@/components/Header";
 import "./scss/globals.scss";
 import { ThemeProvider } from "@/theme";
-import Header from "@/components/Header";
+import { ToastContainer } from "react-toastify";
 import Footer from "@/components/Footer";
+
+import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "@/context/UserProvider";
 
 export default function RootLayout({
@@ -13,7 +16,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider>
-          <UserProvider>{children}</UserProvider>
+          <UserProvider>
+            <Header />
+            {children}
+            <Footer />
+            <ToastContainer />
+          </UserProvider>
         </ThemeProvider>
       </body>
     </html>

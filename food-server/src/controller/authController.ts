@@ -6,7 +6,11 @@ import { sendEmail } from "../utils/sendEmail";
 import errorHandler from "../middleware/errorHandler";
 import MyError from "../utils/myError";
 
-export const signup = async (req: Request, res: Response) => {
+export const signup = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   console.log("Signup");
   try {
     const newUser = req.body;

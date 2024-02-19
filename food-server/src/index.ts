@@ -32,4 +32,4 @@ app.use("/upload", uploadRoutes);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(color.bgMagenta("Server is running,")));
+app.listen(PORT, () => console.log(color.bgBlue("Server is running,")));

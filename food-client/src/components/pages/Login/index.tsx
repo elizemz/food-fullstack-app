@@ -30,14 +30,17 @@ const validationSchema = yup.object({
 const LoginPage = () => {
   const { user, login } = useContext(UserContext);
 
-  const handleLogin = async () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleClick = async () => {
     try {
       const data = await axios.post("http://localhost:8000/auth/login", {
         email: user.email,
         password: user.password,
       });
     } catch (error) {
-      toast.error("Couldn't log-in to an error.");
+      toast.error("Couldn't log-in due to an error.");
     }
   };
 
@@ -100,8 +103,10 @@ const LoginPage = () => {
         <Stack flex="row" width="100%" justifyContent="flex-end">
           <Button
             label="Нэвтрэх"
-            // onClick={formik.handleSubmit}
-            onClick={handleLogin}
+            onClick={() => {
+              formik.handleSubmit();
+              handleClick();
+            }}
           />
         </Stack>
         <Stack sx={{ my: "2rem" }}>

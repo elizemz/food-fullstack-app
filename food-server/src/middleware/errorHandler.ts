@@ -10,7 +10,7 @@ const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("ERR MIDD=====>", err.stack?.red.underline);
+  console.log("ERR MIDD=====>", err.stack?.bgRed);
 
   res
     .status(err.statusCode || 500)

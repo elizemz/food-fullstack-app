@@ -9,6 +9,8 @@ import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { CloudLogo } from "@/components/Logos";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const validationSchema = yup.object({
   name: yup
@@ -48,6 +50,19 @@ const SignupPage = () => {
     validateOnBlur: false,
     validationSchema,
   });
+
+  const handleClick = async () => {
+    try {
+      const data = await axios.post("http://localhost:8000/auth/signup", {
+        name: user.name,
+        email: user.email,
+        address: user.address,
+        password: user.password,
+      });
+    } catch (error) {
+      toast.error("Couldn't sign-up to an error.");
+    }
+  };
 
   return (
     <Container>
@@ -116,7 +131,13 @@ const SignupPage = () => {
           Үйлчилгээний нөхцөл зөвшөөрөх
         </Typography>
         <Stack flex="row" width="100%" justifyContent="flex-end">
-          <Button label="Бүртгүүлэх" onClick={formik.handleSubmit} />
+          <Button
+            label="Бүртгүүлэх"
+            onClick={() => {
+              formik.handleSubmit();
+              handleClick();
+            }}
+          />
         </Stack>
       </Box>
     </Container>

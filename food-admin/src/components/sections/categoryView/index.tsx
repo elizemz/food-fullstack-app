@@ -77,7 +77,7 @@ export default function CategoryView() {
 
       const {
         data: { category },
-      } = (await axios.post("http://localhost:8080/categories", formData)) as {
+      } = (await axios.post("http://localhost:8000/categories", formData)) as {
         data: { category: object };
       };
 
@@ -92,7 +92,7 @@ export default function CategoryView() {
     try {
       const {
         data: { categories },
-      } = (await axios.get("http://localhost:8080/categories")) as {
+      } = (await axios.get("http://localhost:8000/categories")) as {
         data: { categories: [] };
       };
 

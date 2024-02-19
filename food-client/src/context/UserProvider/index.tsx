@@ -1,5 +1,9 @@
 "use client";
 import { createContext, useState, PropsWithChildren } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 interface IUser {
   name: string;
@@ -38,7 +42,17 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     password: "",
   });
 
-  const login = (email: string, password: string): void => {};
+  const login = (email: string, password: string): void => {
+    // console.log("loginworking");
+    // console.log("UUU", userForm)
+    // try{
+    //   const {data} = await axios.post(
+    //     "http://localhost:800/auth/login",{
+    //       email, password,
+    //     }
+    //   )
+    //   }
+  };
 
   const signup = (
     name: string,
