@@ -9,8 +9,8 @@ import {
 const router = Router();
 
 router.route("/user").post(verifyUser);
-router.route("/sendemail").post(sendEmailToUser);
+router.route("/send-email").post(sendEmailToUser);
 router.route("/otp").post(verifyOtp);
-router.route("/reset").post(resetPassword);
+router.route("/reset-password").post(resetPassword);
 
 export default router;

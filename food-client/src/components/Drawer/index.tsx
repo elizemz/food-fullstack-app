@@ -21,7 +21,7 @@ const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
               alignItems={"center"}
               justifyContent={"space-between"}
             >
-              <FaChevronLeft />
+              <FaChevronLeft onClick={handleClose} />
               <Typography fontWeight={600}>Таны сагс</Typography>
               <Typography></Typography>
             </Box>

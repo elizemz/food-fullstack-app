@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { Remove, Add, Close } from "@mui/icons-material";
+import { useState } from "react";
 
 const style = {
   width: 538,
@@ -25,6 +26,7 @@ const backgroundImageStyle = {
 
 export const DrawerCard = () => {
   const [count, setCount] = React.useState(1);
+  const [open, setOpen] = useState(false);
 
   const handleCount = (operation: string) => {
     if (operation === "add") {
@@ -33,6 +35,9 @@ export const DrawerCard = () => {
       setCount(count - 1);
     }
   };
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <>

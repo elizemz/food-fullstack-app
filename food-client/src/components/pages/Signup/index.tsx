@@ -4,7 +4,6 @@ import { Button } from "@/components/core/Button";
 import { Input } from "@/components/core/Input";
 import { UserContext } from "@/context/UserProvider";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import Link from "next/link";
 import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -22,47 +21,42 @@ const validationSchema = yup.object({
     .string()
     .max(100, "Your email address has too many characters.")
     .required("You must enter your email!")
-    .email("Email must be valid."),
-  // .matches(
-  //   /^w+[+.w-]*@([w-]+.)*w+[w-]*.([a-z]{2,4}|d+)$/,
-  //   "You must enter a google mail."
-  // )
+    .email("Email must be valid.")
+    .matches(/^[^@\s]+@[^@\s,]*/, "You must enter a google mail."),
   address: yup.string().required("You must enter your address!"),
   password: yup
+    .string()
+    .required("You must enter your password!")
+    .min(8, "Your password must have at least 8 characters"),
+  rePassword: yup
     .string()
     .required("You must enter your password!")
     .min(8, "Your password must have at least 8 characters"),
 });
 
 const SignupPage = () => {
-  const { user, signup } = useContext(UserContext);
+  const { userForm, signup } = useContext(UserContext);
 
   const formik = useFormik({
-    onSubmit: ({ name, email, address, password }) => {
+    onSubmit: ({ name, email, address, password, rePassword }) => {
       console.log("Name:", name);
       console.log("Email:", email);
       console.log("Address:", address);
       console.log("Password:", password);
-      signup(name, email, address, password);
+      console.log("rePassword:", rePassword);
+      signup(name, email, address, password, rePassword);
     },
-    initialValues: { name: "", email: "", address: "", password: "" },
+    initialValues: {
+      name: "",
+      email: "",
+      address: "",
+      password: "",
+      rePassword: "",
+    },
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema,
   });
-
-  const handleClick = async () => {
-    try {
-      const data = await axios.post("http://localhost:8000/auth/signup", {
-        name: user.name,
-        email: user.email,
-        address: user.address,
-        password: user.password,
-      });
-    } catch (error) {
-      toast.error("Couldn't sign-up to an error.");
-    }
-  };
 
   return (
     <Container>
@@ -117,10 +111,10 @@ const SignupPage = () => {
           />
           <Input
             label="Нууц үг давтах"
-            name="password"
-            value={formik.values.password}
+            name="rePassword"
+            value={formik.values.rePassword}
             onChange={formik.handleChange}
-            errorText={formik.errors.password}
+            errorText={formik.errors.rePassword}
             showPassword
           />
         </Stack>
@@ -131,13 +125,7 @@ const SignupPage = () => {
           Үйлчилгээний нөхцөл зөвшөөрөх
         </Typography>
         <Stack flex="row" width="100%" justifyContent="flex-end">
-          <Button
-            label="Бүртгүүлэх"
-            onClick={() => {
-              formik.handleSubmit();
-              handleClick();
-            }}
-          />
+          <Button label="Бүртгүүлэх" onClick={formik.handleSubmit} />
         </Stack>
       </Box>
     </Container>

@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
-
+import FoodModal from "@/components/foodModal";
 import FoodCard from "./food-card";
 import FoodSort from "./food-sort";
 // import ProductFilters from "./product-filters";
@@ -92,6 +92,7 @@ export default function FoodView() {
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="eva:plus-fill" />}
+          onClick={handleOpenFilter}
         >
           Шинэ хоол
         </Button>

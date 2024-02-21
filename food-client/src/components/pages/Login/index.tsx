@@ -16,11 +16,8 @@ const validationSchema = yup.object({
     .string()
     .max(100, "Your email address has too many characters.")
     .required("You must enter your email!")
-    .email("Email must be valid."),
-  // .matches(
-  //   /^w+[+.w-]*@([w-]+.)*w+[w-]*.([a-z]{2,4}|d+)$/,
-  //   "You must enter a google mail."
-  // )
+    .email("Email must be valid.")
+    .matches(/^[^@\s]+@[^@\s,]*/, "You must enter a google mail."),
   password: yup
     .string()
     .required("You must enter your password!")
@@ -28,21 +25,7 @@ const validationSchema = yup.object({
 });
 
 const LoginPage = () => {
-  const { user, login } = useContext(UserContext);
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleClick = async () => {
-    try {
-      const data = await axios.post("http://localhost:8000/auth/login", {
-        email: user.email,
-        password: user.password,
-      });
-    } catch (error) {
-      toast.error("Couldn't log-in due to an error.");
-    }
-  };
+  const { login } = useContext(UserContext);
 
   const formik = useFormik({
     onSubmit: ({ email, password }) => {
@@ -101,13 +84,7 @@ const LoginPage = () => {
         </Stack>
 
         <Stack flex="row" width="100%" justifyContent="flex-end">
-          <Button
-            label="Нэвтрэх"
-            onClick={() => {
-              formik.handleSubmit();
-              handleClick();
-            }}
-          />
+          <Button label="Нэвтрэх" onClick={formik.handleSubmit} />
         </Stack>
         <Stack sx={{ my: "2rem" }}>
           <Typography>Эсвэл</Typography>

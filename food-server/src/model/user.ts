@@ -16,6 +16,9 @@ const userSchema = new Schema({
     minlength: 8,
     select: false,
   },
+  rePassword: {
+    type: String,
+  },
   avatarUrl: {
     type: String,
   },

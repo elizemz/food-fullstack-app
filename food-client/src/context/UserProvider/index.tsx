@@ -1,68 +1,101 @@
 "use client";
 import { createContext, useState, PropsWithChildren } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 interface IUser {
   name: string;
   email: string;
   address: string;
   password?: string;
+  rePassword?: string;
 }
 
 interface IUserContext {
-  user: IUser;
+  userForm: IUser;
   login: (email: string, password: string) => void;
   signup: (
     name: string,
     email: string,
     address: string,
-    password: string
+    password: string,
+    rePassword: string
   ) => void;
 }
 
 export const UserContext = createContext<IUserContext>({
-  user: {
+  userForm: {
     name: "",
     email: "",
     address: "",
     password: "",
+    rePassword: "",
   },
   login: function (): void {},
   signup: function (): void {},
 });
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
-  const [user, setUser] = useState<IUser>({
-    name: "Test User",
+  const router = useRouter();
+  const [userForm, setUserForm] = useState<IUser>({
+    name: "",
     email: "",
     address: "",
     password: "",
+    rePassword: "",
   });
 
-  const login = (email: string, password: string): void => {
-    // console.log("loginworking");
-    // console.log("UUU", userForm)
-    // try{
-    //   const {data} = await axios.post(
-    //     "http://localhost:800/auth/login",{
-    //       email, password,
-    //     }
-    //   )
-    //   }
+  const login = async (email: string, password: string) => {
+    console.log("LoginWorking");
+    console.log("UUU", userForm);
+    try {
+      const { data } = await axios.post("http://localhost:8000/auth/login", {
+        email,
+        password,
+      });
+      setUserForm(data.user);
+      setUserForm(data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
+      console.log("DataLogin", data);
+      router.push("/");
+    } catch (error) {
+      toast.error("Could not log-in due to an error");
+    }
   };
 
-  const signup = (
+  const signup = async (
     name: string,
     email: string,
     address: string,
-    password: string
-  ): void => {};
+    password: string,
+    rePassword: string
+  ) => {
+    console.log("SignupWorking");
+    console.log("UUU", userForm);
+
+    try {
+      const { data } = await axios.post("http://localhost:8000/auth/signup", {
+        name,
+        email,
+        address,
+        password,
+        rePassword,
+      });
+      setUserForm(data.user);
+      setUserForm(data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
+      console.log("DataSignup", data);
+      router.push("/login");
+    } catch (error) {
+      toast.error("Could not sign-up due to an error");
+    }
+  };
 
   return (
-    <UserContext.Provider value={{ user, login, signup }}>
+    <UserContext.Provider value={{ userForm, login, signup }}>
       {children}
     </UserContext.Provider>
   );
