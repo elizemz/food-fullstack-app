@@ -1,9 +1,10 @@
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
-import ProductCard from "../ProductCard";
-import StarIcon from "../StarIcon";
+import ProductCard from "../../ProductCard";
+import StarIcon from "../../StarIcon";
 import { FaChevronRight } from "react-icons/fa";
+import { CardModal } from "../../Modal";
 
-const CardsSection = () => {
+const CategoryList = () => {
   return (
     <Box paddingY={5}>
       <Container maxWidth="xl">
@@ -11,6 +12,7 @@ const CardsSection = () => {
           direction={"row"}
           alignItems={"center"}
           justifyContent={"space-between"}
+          sx={{ marginTop: "60px", display: "flex" }}
         >
           <Box display={"flex"} alignItems={"center"} gap={3}>
             <StarIcon />
@@ -44,4 +46,4 @@ const CardsSection = () => {
   );
 };
 
-export default CardsSection;
+export default CategoryList;

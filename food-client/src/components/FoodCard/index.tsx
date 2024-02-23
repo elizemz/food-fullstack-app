@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "../..";
+import { Button } from "../pages";
 import { CardModal } from "@/components/Modal";
 import StarIcon from "@/components/StarIcon";
 import {
