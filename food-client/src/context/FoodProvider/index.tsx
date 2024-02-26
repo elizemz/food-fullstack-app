@@ -1,8 +1,6 @@
 "use client";
 import { createContext, useState, PropsWithChildren, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { useRouter } from "next/router";
 
 interface IFood {
   name: string;

@@ -11,6 +11,7 @@ import foodRoutes from "./routes/foodRoutes";
 import userRoutes from "./routes/userRoutes";
 import uploadRoutes from "./routes/uploadRoutes";
 import verifyRoutes from "./routes/verifyRoutes";
+import basketRoutes from "./routes/basketRoutes";
 import errorHandler from "./middleware/errorHandler";
 
 const MONGO_URI = process.env.MONGO_URI as string;
@@ -29,6 +30,7 @@ app.use("/food", foodRoutes);
 app.use("/users", userRoutes);
 app.use("/verify", verifyRoutes);
 app.use("/upload", uploadRoutes);
+app.use("/basket", basketRoutes);
 
 app.use(errorHandler);
 

@@ -30,6 +30,7 @@ const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
             <DrawerCard />
             <Box sx={{ boxShadow: "3" }}></Box>
 
+            <Divider sx={{ position: "relative", top: "800px" }} />
             <Box
               sx={{
                 display: "flex",
@@ -51,7 +52,7 @@ const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
                 </Typography>
               </Box>
               <Link
-                href="/order"
+                href="/basket"
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Typography

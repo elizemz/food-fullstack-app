@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState, PropsWithChildren } from "react";
+import { createContext, useState, PropsWithChildren, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -38,6 +38,8 @@ export const UserContext = createContext<IUserContext>({
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [userForm, setUserForm] = useState<IUser>({
     name: "",
     email: "",
@@ -94,8 +96,17 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  useEffect(() => {
+    const loggedUser = JSON.parse(localStorage.getItem("user") as string);
+    const loggedToken = localStorage.getItem("token")!;
+    if (!loggedUser) {
+      setUser(loggedUser || loggedToken);
+      setToken(loggedToken);
+    }
+  }, []);
+
   return (
-    <UserContext.Provider value={{ userForm, login, signup }}>
+    <UserContext.Provider value={{ userForm, login, signup, user, token }}>
       {children}
     </UserContext.Provider>
   );

@@ -1,6 +1,6 @@
 import { Schema, Types, model } from "mongoose";
 
-const fooSchema = new Schema({
+const foodSchema = new Schema({
   name: {
     type: String,
     require: [true, "Food must be named."],
@@ -38,6 +38,6 @@ const fooSchema = new Schema({
   },
 });
 
-const Food = model("Food", fooSchema);
+const Food = model("Food", foodSchema);
 
 export default Food;
