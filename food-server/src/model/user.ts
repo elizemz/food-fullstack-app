@@ -40,10 +40,42 @@ const userSchema = new Schema({
     type: String,
     default: "",
   },
-  createdAt: {
-    type: Date,
-    default: new Date(),
-  },
+  phone: { type: String },
+  orders: [
+    {
+      orderNo: String,
+      payment: {
+        paymentAmount: Number,
+        status: {
+          type: String,
+          enum: ["paid", "pending"],
+          default: "pending",
+        },
+        paidDate: Date,
+        createdAt: {
+          type: Date,
+          default: new Date(),
+        },
+      },
+      address: {
+        khoroo: { type: String },
+        street: { type: String },
+        buildingNum: { type: String },
+        info: { type: String },
+      },
+      delivery: {
+        status: {
+          type: String,
+          enum: ["pending", "in-progress", "delivered"],
+          default: "pending",
+        },
+        deliveredAt: {
+          type: Date,
+          default: new Date(),
+        },
+      },
+    },
+  ],
 });
 
 userSchema.pre("save", async function async(next) {

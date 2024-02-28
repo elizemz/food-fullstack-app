@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "../pages";
+import { Button } from "../..";
 import { CardModal } from "@/components/Modal";
 import StarIcon from "@/components/StarIcon";
 import {
@@ -16,50 +16,49 @@ import {
 import { useState } from "react";
 
 interface IFoodProps {
-  data: {
+  food: {
+    _id: string;
     name: string;
     price: number;
     img: string;
   };
 }
 
-export const FoodCard = ({ data }: IFoodProps) => {
+export const FoodCard = ({ food }: IFoodProps) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
-    <>
+    <Grid item xs={12} sm={6} md={4} lg={3} justifyContent="center">
       <Card
-        sx={{ maxWidth: 282, margin: 5, border: "none", boxShadow: "none" }}
+        sx={{
+          maxWidth: 282,
+          margin: "20px auto",
+          border: "none",
+          boxShadow: "none",
+        }}
         onClick={handleOpen}
       >
         <CardActionArea>
-          <CardMedia
-            sx={{ p: 0, height: 186 }}
-            image={data.img || "/assets/images/food/food3.png"}
-          />
+          <CardMedia sx={{ p: 0, height: 186 }} />
           <CardContent
             sx={{
               pt: 1,
             }}
           >
             <Typography fontSize={18} fontWeight={600}>
-              {data.name}
+              {food?.name}
             </Typography>
             <Typography color="primary" fontSize={18} fontWeight={600}>
-              {data.price}₮
+              {food?.price}₮
             </Typography>
           </CardContent>
         </CardActionArea>
       </Card>
-      <CardModal
-        open={open}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-      />
-    </>
+      <CardModal open={open} handleClose={handleClose} food={food} />
+    </Grid>
   );
 };
 

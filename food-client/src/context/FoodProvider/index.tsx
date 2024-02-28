@@ -33,7 +33,7 @@ export const FoodProvider = ({ children }: PropsWithChildren) => {
       console.log("Food is here.", foods);
       setFoods(foods);
     } catch (error: any) {
-      alert("Could not add your food." + error.message);
+      console.log("Could not add your food.");
     }
   };
 

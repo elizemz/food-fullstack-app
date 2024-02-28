@@ -22,10 +22,12 @@ export default function RootLayout({
           <UserProvider>
             <CategoryProvider>
               <FoodProvider>
-                <Header />
-                {children}
-                <Footer />
-                <ToastContainer />
+                <BasketProvider>
+                  <Header />
+                  {children}
+                  <Footer />
+                  <ToastContainer />
+                </BasketProvider>
               </FoodProvider>
             </CategoryProvider>
           </UserProvider>

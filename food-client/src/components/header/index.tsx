@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, useContext } from "react";
 import {
   AppBar,
   Box,
@@ -13,6 +13,7 @@ import {
   Tooltip,
   MenuItem,
   OutlinedInput,
+  Badge,
 } from "@mui/material";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
@@ -22,6 +23,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Logo } from "@/components/Logos";
 import Link from "next/link";
 import MyDrawer from "../Drawer";
+import { BasketContext } from "@/context";
 
 const pages = ["НҮҮР", "ХООЛНЫ ЦЭС", "ХҮРГЭЛТИЙН БҮС"];
 const settings = ["Профайл", "Тохиргоо", , "Гарах"];
@@ -31,6 +33,7 @@ export const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [drawer, setDrawer] = useState(false);
+  const { basket }: any = useContext(BasketContext);
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -139,18 +142,24 @@ export const Header = () => {
           >
             <Box sx={{ px: 2 }}>
               <IconButton onClick={handleOpenDrawer} style={{ color: "black" }}>
-                <ShoppingBasketOutlinedIcon fontSize="medium" />
-                <span
-                  style={{
-                    display: "inline-block",
-                    marginLeft: "8px",
-                    fontSize: "1rem",
-                    fontWeight: "bold",
-                    color: "black",
-                  }}
+                <Badge
+                  badgeContent={basket?.foods?.length}
+                  color="success"
+                  sx={{ marginLeft: 2 }}
                 >
-                  САГС
-                </span>
+                  <ShoppingBasketOutlinedIcon fontSize="medium" />
+                  <span
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "8px",
+                      fontSize: "1rem",
+                      fontWeight: "bold",
+                      color: "black",
+                    }}
+                  >
+                    САГС
+                  </span>
+                </Badge>
               </IconButton>
               <MyDrawer open={drawer} handleClose={handleCloseDrawer} />
             </Box>

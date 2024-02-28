@@ -31,7 +31,7 @@ export const CategoryProvider = ({ children }: PropsWithChildren) => {
       console.log("Category is here.", categories);
       setCategories(categories);
     } catch (error: any) {
-      alert("Could not add your category." + error.message);
+      console.log("Could not add your category.");
     }
   };
 
