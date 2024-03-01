@@ -4,6 +4,7 @@ import {
   addToBasketByUserId,
   deleteFromBasketByUser,
   getFromBasketByUser,
+  updateBasket,
 } from "../controller/basketController";
 
 const router = Router();
@@ -11,7 +12,8 @@ const router = Router();
 router
   .route("/")
   .post(authenticate, addToBasketByUserId)
-  .get(authenticate, getFromBasketByUser);
+  .get(authenticate, getFromBasketByUser)
+  .put(authenticate, updateBasket);
 
 router.route("/:foodId").delete(authenticate, deleteFromBasketByUser);
 

@@ -1,18 +1,21 @@
 "use client";
-import { createContext, useState, PropsWithChildren, useEffect } from "react";
+import React, {
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
+
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useRouter } from "next/router";
 
 interface ICategory {
+  _id: string;
   name: string;
-  description: string;
-  image: string;
 }
 
 interface ICategoryContext {
   categories: ICategory[];
-  getCategory: () => void;
 }
 
 export const CategoryContext = createContext<ICategoryContext>(
@@ -20,27 +23,27 @@ export const CategoryContext = createContext<ICategoryContext>(
 );
 
 export const CategoryProvider = ({ children }: PropsWithChildren) => {
-  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [refresh, setRefresh] = useState(false);
+  const [categories, setCategories] = useState([]);
 
-  const getCategory = async () => {
-    console.log("CategoryProvWorking");
+  const getCategories = async () => {
     try {
       const {
         data: { categories },
-      } = await axios.post("http://localhost:8000/category");
-      console.log("Category is here.", categories);
+      } = await axios.get("http://localhost:8000/category");
+
       setCategories(categories);
     } catch (error: any) {
-      console.log("Could not add your category.");
+      toast.error("Error" + error.message);
     }
   };
 
   useEffect(() => {
-    getCategory();
-  }, []);
+    getCategories();
+  }, [refresh]);
 
   return (
-    <CategoryContext.Provider value={{ categories, getCategory }}>
+    <CategoryContext.Provider value={{ categories }}>
       {children}
     </CategoryContext.Provider>
   );

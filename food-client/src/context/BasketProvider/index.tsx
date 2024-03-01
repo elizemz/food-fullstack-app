@@ -1,101 +1,139 @@
 "use client";
+import React, {
+  ChangeEvent,
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { UserContext } from "..";
 
 import axios from "axios";
-import { PropsWithChildren, createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-export const BasketContext = createContext({} as object);
-
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Yjc3N2QxNDg4ZmUxZTY4Mjk1MTA4MiIsImlhdCI6MTcwOTEwODM5NywiZXhwIjoxNzA5MTk0Nzk3fQ.8ZsUHupByl8rFYT9UUdg5mgDHgMZnhPiQViWzx9ac5k";
-
-const createReq = async (url: string, foodItem: any) => {
-  const { data } = (await axios.post(url, foodItem, {
-    headers: { Authorization: `Bearer ${token}` },
-  })) as {
-    data: any;
+interface IBasket {
+  _id: string;
+  food: {
+    image: string;
+    name: string;
+    _id: string;
+    description: string;
+    price: number;
   };
-  return { basket: data.basket, message: data.message };
-};
+  count: number;
+}
+interface IBasketObject {
+  userId: string;
+  foods: IBasket[];
+  totalPrice: number;
+}
 
-export const BasketProvider = ({ children }: PropsWithChildren) => {
-  const [basket, setBasket] = useState<{} | null>(null);
-  const [refetch, setRefetch] = useState<boolean>(false);
+interface IBasketContext {
+  loading: boolean;
+  baskets: IBasketObject | null;
+  addBasket: (foodItem: any) => Promise<void>;
+  deleteBasket: (food: any) => Promise<void>;
+  updateFoodBasket: (foodItem: any) => Promise<void>;
+}
 
-  const addFoodToBasket = async (foodItem: any) => {
-    console.log("Food", foodItem);
-    try {
-      const { basket, message } = await createReq(
-        "http://localhost:8000/basket",
-        foodItem
-      );
-      console.log("RES", basket);
-      setBasket({ ...basket });
-      toast.success(message);
-    } catch (error: any) {
-      toast.error(error.response.data.message);
-    }
-  };
+export const BasketContext = createContext({} as IBasketContext);
 
-  const updateFoodToBasket = async (foodItem: any) => {
-    console.log("Food", foodItem);
-    try {
-      const { basket } = await createReq(
-        "http://localhost:8000/basket",
-        foodItem
-      );
-      console.log("RES", basket);
-      setBasket({ ...basket });
-    } catch (error: any) {
-      toast.error(error.response.data.message);
-    }
-  };
+const BasketProvider = ({ children }: PropsWithChildren) => {
+  const { token, user } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  const [baskets, setBaskets] = useState<IBasketObject | null>(null);
+  const [refresh, setRefresh] = useState(false);
 
-  const deleteFoodFromBasket = async (foodId: string) => {
-    console.log("Food", foodId);
-    try {
-      const { data } = await axios.delete(
-        `http://localhost:8000/basket/${foodId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      console.log("RES", data?.basket);
-      // setBasket({ ...data?.basket });
-    } catch (error: any) {
-      toast.error(error.response.data.message);
-    }
-  };
-
-  const getFoodBasket = async () => {
-    try {
-      const { data } = (await axios.get("http://localhost:8000/basket", {
+  const createReq = async (foodItem: any) => {
+    const { data } = (await axios.post(
+      "http://localhost:8000/basket/",
+      foodItem,
+      {
         headers: { Authorization: `Bearer ${token}` },
-      })) as {
-        data: any;
-      };
-      console.log("RES", data);
-      setBasket({ ...data?.basket });
-      // toast.success(data.message);
+      }
+    )) as {
+      data: any;
+    };
+    return { basket: data.basket, message: data.message };
+  };
+
+  const getBaskets = async () => {
+    try {
+      if (token) {
+        const {
+          data: { basket },
+        } = await axios.get("/basket/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log("B", basket);
+        setBaskets({ ...basket });
+      }
+    } catch (error: any) {
+      alert("Error" + error.message);
+    }
+  };
+
+  console.log("getallbaskets", baskets);
+
+  const addBasket = async (foodItem: any) => {
+    console.log("Food", foodItem);
+    try {
+      const { basket, message } = await createReq(foodItem);
+      console.log("RES", basket);
+      setBaskets({ ...basket });
+      toast.success(message);
+      setLoading(false);
+      setRefresh(!refresh);
     } catch (error: any) {
       toast.error(error.response.data.message);
+    }
+  };
+
+  const updateFoodBasket = async (foodItem: any) => {
+    console.log("Food", foodItem);
+    try {
+      const { basket } = await createReq(foodItem);
+      console.log("RES", basket);
+      setBaskets({ ...basket });
+      setLoading(false);
+      setRefresh(!refresh);
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const deleteBasket = async (value: any) => {
+    try {
+      setLoading(true);
+
+      if (user) {
+        const {
+          data: { basket },
+        } = await axios.delete("/basket/" + value, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setLoading(false);
+        setRefresh(!refresh);
+      }
+    } catch (error: any) {
+      alert("Error" + error.message);
     }
   };
 
   useEffect(() => {
-    getFoodBasket();
-  }, [refetch]);
+    getBaskets();
+  }, [refresh, token]);
 
   return (
     <BasketContext.Provider
-      value={{
-        basket,
-        addFoodToBasket,
-        updateFoodToBasket,
-        deleteFoodFromBasket,
-      }}
+      value={{ loading, baskets, addBasket, deleteBasket, updateFoodBasket }}
     >
       {children}
     </BasketContext.Provider>
   );
 };
+
+export default BasketProvider;

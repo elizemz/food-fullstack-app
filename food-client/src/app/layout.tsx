@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "@/context/UserProvider";
 import { CategoryProvider } from "@/context/CategoryProvider";
 import { FoodProvider } from "@/context/FoodProvider";
-import { BasketProvider } from "@/context/BasketProvider";
+import BasketProvider from "@/context/BasketProvider";
 
 export default function RootLayout({
   children,

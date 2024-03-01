@@ -54,7 +54,7 @@ const userSchema = new Schema({
         paidDate: Date,
         createdAt: {
           type: Date,
-          default: new Date(),
+          default: Date.now,
         },
       },
       address: {
@@ -71,7 +71,7 @@ const userSchema = new Schema({
         },
         deliveredAt: {
           type: Date,
-          default: new Date(),
+          default: Date.now,
         },
       },
     },

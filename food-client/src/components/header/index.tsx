@@ -22,7 +22,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Logo } from "@/components/Logos";
 import Link from "next/link";
-import MyDrawer from "../Drawer";
+import { BasketDrawerProp } from "../Drawer/BasketDrawer";
 import { BasketContext } from "@/context";
 
 const pages = ["НҮҮР", "ХООЛНЫ ЦЭС", "ХҮРГЭЛТИЙН БҮС"];
@@ -150,18 +150,19 @@ export const Header = () => {
                   <ShoppingBasketOutlinedIcon fontSize="medium" />
                   <span
                     style={{
-                      display: "inline-block",
+                      display: "flex",
                       marginLeft: "8px",
                       fontSize: "1rem",
                       fontWeight: "bold",
                       color: "black",
+                      alignItems: "center",
                     }}
                   >
                     САГС
                   </span>
                 </Badge>
               </IconButton>
-              <MyDrawer open={drawer} handleClose={handleCloseDrawer} />
+              <BasketDrawerProp open={drawer} handleClose={handleCloseDrawer} />
             </Box>
             <Box sx={{ px: 2 }}>
               <IconButton

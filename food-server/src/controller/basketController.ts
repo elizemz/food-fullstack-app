@@ -83,6 +83,12 @@ export const getFromBasketByUser = async (
   }
 };
 
+export const updateBasket = async (
+  req: IReq,
+  res: Response,
+  next: NextFunction
+) => {};
+
 export const deleteFromBasketByUser = async (
   req: IReq,
   res: Response,

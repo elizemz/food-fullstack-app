@@ -12,6 +12,7 @@ import Image from "next/image";
 import { Remove, Add, Close } from "@mui/icons-material";
 import { Button } from "../pages";
 import { BasketContext } from "@/context";
+import { useRouter } from "next/navigation";
 
 const style = {
   position: "absolute",
@@ -29,16 +30,11 @@ const style = {
 interface IModalProps {
   open: boolean;
   handleClose: () => void;
-  food: {
-    _id: string;
-    name: string;
-    price: number;
-    img: string;
-  };
+  food: any;
 }
 
 export const CardModal = ({ food, handleClose, open }: IModalProps) => {
-  const { addFoodToBasket }: any = useContext(BasketContext);
+  const { addBasket, loading }: any = useContext(BasketContext);
   const [count, setCount] = useState(1);
 
   const handleCount = (operation: string) => {
@@ -50,7 +46,7 @@ export const CardModal = ({ food, handleClose, open }: IModalProps) => {
   };
 
   const handleSave = () => {
-    addFoodToBasket({
+    addBasket({
       foodId: food._id,
       quantity: count,
       totalPrice: count * food.price,
@@ -59,17 +55,23 @@ export const CardModal = ({ food, handleClose, open }: IModalProps) => {
     handleClose();
   };
 
+  const router = useRouter();
+
   return (
-    <div>
-      <Modal open={open} onClose={handleClose}>
+    <Stack>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
         <Box sx={style}>
           <Grid container display={"flex"} flexDirection={"row"} gap={10}>
             <Grid item xs={6}>
-              <Image
+              <img
                 alt=""
                 width={250}
                 height={250}
-                src="/assets/food-1.jpg"
                 style={{ width: "100%", height: "100%" }}
               />
             </Grid>
@@ -85,29 +87,30 @@ export const CardModal = ({ food, handleClose, open }: IModalProps) => {
               <Grid item xs={1} position={"relative"}>
                 <MuiButton
                   onClick={handleClose}
-                  sx={{ ml: 65, position: "absolute" }}
+                  sx={{ ml: 67, position: "absolute" }}
                 >
                   <Close />
                 </MuiButton>
               </Grid>
               <Grid display={"flex"} flexDirection={"column"} gap={2}>
-                <Grid>
+                <Stack>
                   <Typography
                     id="modal-modal-title"
                     variant="h5"
                     fontWeight={600}
                     component="h2"
                   >
-                    {food?.name}
+                    {food.name}
                   </Typography>
                   <Typography
+                    my={2}
                     id="modal-modal-description"
                     sx={{ color: "#18BA51" }}
                   >
-                    {food?.price}
+                    {food.price}₮
                   </Typography>
-                </Grid>
-                <Grid>
+                </Stack>
+                <Stack>
                   <Typography
                     id="modal-modal-title"
                     variant="h6"
@@ -122,11 +125,12 @@ export const CardModal = ({ food, handleClose, open }: IModalProps) => {
                     bgcolor={"#F6F6F6"}
                     p={3}
                     borderRadius={4}
+                    my={2}
                   >
-                    Өндөг, шош, улаан лооль, өргөст хэмт, байцаа, салмон.
+                    {food.description}
                   </Typography>
-                </Grid>
-                <Grid>
+                </Stack>
+                <Stack>
                   <Typography
                     id="modal-modal-title"
                     variant="h6"
@@ -135,7 +139,7 @@ export const CardModal = ({ food, handleClose, open }: IModalProps) => {
                   >
                     Тоо
                   </Typography>
-                  <Stack direction={"row"} justifyContent={"center"}>
+                  <Box display={"flex"} alignItems={"center"}>
                     <MuiButton onClick={() => handleCount("min")}>
                       <Remove
                         sx={{
@@ -143,6 +147,7 @@ export const CardModal = ({ food, handleClose, open }: IModalProps) => {
                           color: "white",
                           width: "70%",
                           height: "30px",
+                          py: 1,
                           borderRadius: 2,
                         }}
                       />
@@ -171,15 +176,19 @@ export const CardModal = ({ food, handleClose, open }: IModalProps) => {
                         }}
                       />
                     </MuiButton>
-                  </Stack>
-                </Grid>
+                  </Box>
+                </Stack>
 
-                <Button label={"Сагслах"} onClick={handleSave} />
+                <Button
+                  label={"Сагслах"}
+                  disabled={loading}
+                  onClick={() => handleSave()}
+                />
               </Grid>
             </Grid>
           </Grid>
         </Box>
       </Modal>
-    </div>
+    </Stack>
   );
 };

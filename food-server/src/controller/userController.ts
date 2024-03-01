@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 import User from "../model/user";
 
@@ -13,5 +13,16 @@ export const getUsers = async (req: Request, res: Response) => {
       message: "There was an error during the process.",
       error,
     });
+  }
+};
+
+export const uploadPhoto = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+  } catch (error) {
+    next(error);
   }
 };

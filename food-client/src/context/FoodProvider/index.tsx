@@ -1,52 +1,55 @@
 "use client";
-import { createContext, useState, PropsWithChildren, useEffect } from "react";
+import React, {
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface IFood {
+  _id: string;
   name: string;
+  desc: string;
   price: number;
-  discountPrice: number;
-  isSale: boolean;
-  description: string;
   image: string;
-  category: { name: string };
+  discountPrice?: number;
+  category: object;
+  isSale: boolean;
 }
 
 interface IFoodContext {
   foods: IFood[];
-  getFood: () => void;
-  filteredFoods: any;
-  setFilteredFoods: any;
+  getFoods: () => Promise<void>;
+  isLoading: boolean;
 }
 
 export const FoodContext = createContext<IFoodContext>({} as IFoodContext);
 
 export const FoodProvider = ({ children }: PropsWithChildren) => {
-  const [foods, setFoods] = useState<IFood[]>([]);
+  const [refresh, setRefresh] = useState(false);
+  const [foods, setFoods] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const getFood = async () => {
-    console.log("FoodProvWorking");
+  const getFoods = async () => {
     try {
       const {
         data: { foods },
-      } = await axios.post("http://localhost:8000/food");
-      console.log("Food is here.", foods);
+      } = await axios.get("http://localhost:8000/food");
       setFoods(foods);
+      setIsLoading(false);
     } catch (error: any) {
-      console.log("Could not add your food.");
+      toast.error("Error" + error.message);
     }
   };
 
   useEffect(() => {
-    getFood();
-  }, []);
-
-  const [filteredFoods, setFilteredFoods] = useState([]);
+    getFoods();
+  }, [refresh]);
 
   return (
-    <FoodContext.Provider
-      value={{ foods, getFood, filteredFoods, setFilteredFoods }}
-    >
+    <FoodContext.Provider value={{ foods, getFoods, isLoading }}>
       {children}
     </FoodContext.Provider>
   );
