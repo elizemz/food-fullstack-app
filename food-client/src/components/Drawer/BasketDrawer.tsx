@@ -78,15 +78,16 @@ export const BasketDrawerProp = ({ open, handleClose }: Props) => {
             </Typography>
           </Stack>
         )}
-
-        {baskets?.foods && (
-          <DrawerCard
-            baskets={baskets}
-            loading={loading}
-            changeOnclick={changeOnclick}
-            sum={sum}
-          />
-        )}
+        <Box sx={{ marginTop: "", backgroundColor: "black" }}>
+          {baskets?.foods && (
+            <DrawerCard
+              baskets={baskets}
+              loading={loading}
+              changeOnclick={changeOnclick}
+              sum={sum}
+            />
+          )}
+        </Box>
       </Box>
     </Drawer>
   );

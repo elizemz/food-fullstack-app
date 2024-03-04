@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Card,
   CardActionArea,
   CardContent,
   CardMedia,
   Chip,
-  Container,
   Grid,
+  Typography,
 } from "@mui/material";
 import {
   Schedule,
@@ -15,45 +15,74 @@ import {
   Key,
 } from "@mui/icons-material";
 import Image from "next/image";
-import InfoCard from "./InfoCard";
+import { FoodContext } from "@/context";
 
-const infoCards = [
+const InfoData = [
   {
     id: 9,
     icon: <ImportContactsOutlined sx={{ color: "#18BA51", fontSize: 35 }} />,
     name: "Хүргэлтийн төлөв хянах",
-    description: "Захиалга бэлтгэлийн явцыг хянах",
+    desc: "Захиалга бэлтгэлийн явцыг хянах",
   },
   {
     id: 10,
     icon: <Schedule sx={{ color: "#18BA51", fontSize: 35 }} />,
     name: "Шуурхай хүргэлт",
-    description: "Захиалга бэлтгэлийн явцыг хянах",
+    desc: "Захиалга бэлтгэлийн явцыг хянах",
   },
   {
     id: 11,
     icon: <RiceBowl sx={{ color: "#18BA51", fontSize: 35 }} />,
     name: "Эрүүл, баталгаат орц",
-    description: "Захиалга бэлтгэлийн явцыг хянах",
+    desc: "Захиалга бэлтгэлийн явцыг хянах",
   },
   {
     id: 12,
     icon: <ImportContactsOutlined sx={{ color: "#18BA51", fontSize: 35 }} />,
     name: "Хоолны өргөн сонголт",
-    description: "Захиалга бэлтгэлийн явцыг хянах",
+    desc: "Захиалга бэлтгэлийн явцыг хянах",
   },
 ];
-
-const InfoList = () => {
-  return (
-    <Container>
-      <Grid container spacing={12}>
-        {infoCards.map((card) => (
-          <InfoCard key={card.id} data={card} />
-        ))}
-      </Grid>
-    </Container>
-  );
+type Props = {
+  data: {
+    _id: string;
+    name: string;
+    price: number;
+    discountPrice?: number;
+    isSale: undefined | boolean;
+    image: string;
+  };
 };
 
-export default InfoList;
+export const InfoCard = () => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        justifyContent: "space-around",
+        gap: 50,
+      }}
+    >
+      {InfoData.map((data) => (
+        <Card
+          key={data.id}
+          sx={{ width: "100%", borderRadius: 3, boxShadow: 3 }}
+        >
+          <CardContent>
+            {data.icon}
+            <Typography
+              gutterBottom
+              variant="h6"
+              sx={{ fontWeight: 600 }}
+              component="div"
+            >
+              {data.name}
+            </Typography>
+            <Typography>{data.desc}</Typography>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+};

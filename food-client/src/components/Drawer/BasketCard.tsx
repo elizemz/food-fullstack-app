@@ -2,6 +2,7 @@ import { Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import { BasketFoods } from "./BasketFood";
 import { Button } from "../pages";
+import { BasketContext } from "@/context";
 
 type Props = {
   baskets: any;
@@ -22,7 +23,7 @@ const DrawerCard = ({ baskets, loading, changeOnclick, sum }: Props) => {
         position={"sticky"}
         bottom={0}
         boxShadow={6}
-        bgcolor={"white"}
+        bgcolor={""}
         py={10}
         px={5}
       >

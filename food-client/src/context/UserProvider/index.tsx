@@ -16,6 +16,7 @@ interface IUser {
   email: string;
   address: string;
   password?: string;
+  rePassword?: string;
   phoneNumber?: string;
 }
 
@@ -26,6 +27,7 @@ interface IUserContext {
   signup: (
     name: string,
     password: string,
+    rePassword: string,
     email: string,
     address: string
   ) => Promise<void>;
@@ -137,6 +139,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
         email: email,
         address: address,
         password: password,
+        rePassword: password,
       });
 
       await Swal.fire({

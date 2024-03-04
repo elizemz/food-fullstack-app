@@ -13,6 +13,7 @@ const HeroSection = () => {
       my={5}
       gap={20}
       py={15}
+      mt={-0.1}
       sx={{ backgroundImage: `url(${"/logo_svg/footer.svg"})` }}
     >
       <Grid item>

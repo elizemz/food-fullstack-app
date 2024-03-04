@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { FoodCard } from "../FoodList/Card";
+import { FoodCard } from "../FoodCard";
 import Link from "next/link";
 
 const CategoryFoodList = ({ categories, foods }: any) => {
