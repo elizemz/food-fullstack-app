@@ -45,19 +45,14 @@ export const DashFood = ({ foods, categoryName, id }: Props) => {
         </Button>
       </Grid>
 
-      <Grid>
-        <Stack
-          sx={{ display: "flex", justifyContent: "center", margin: "auto" }}
-        >
-          {foods &&
-            foods
-              ?.filter((food: any) => food.category._id == id)
-              .map((food: any) => (
-                <Grid item key={food._id}>
-                  <FoodCard food={food} />
-                </Grid>
-              ))}
-        </Stack>
+      <Grid sx={{ display: "flex", alignItems: "center", gap: "20px" }}>
+        {foods
+          ?.filter((food: any) => food.category._id == id)
+          .map((food: any) => (
+            <Grid key={food._id}>
+              <FoodCard food={food} />
+            </Grid>
+          ))}
       </Grid>
     </Container>
   );

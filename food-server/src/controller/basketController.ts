@@ -3,7 +3,7 @@ import Basket from "../model/basket";
 import { IReq } from "../utils/interface";
 import MyError from "../utils/myError";
 
-export const addToBasketByUserId = async (
+export const addToBasket = async (
   req: IReq,
   res: Response,
   next: NextFunction
@@ -26,6 +26,7 @@ export const addToBasketByUserId = async (
           totalPrice: req.body.totalPrice,
         })
       ).populate("foods.food");
+      console.log("BASK", basket);
       res.status(200).json({ message: "Хоол амжилттай нэмлээ-1", basket });
     } else {
       console.log("BFOODS", findBasket);
@@ -43,10 +44,6 @@ export const addToBasketByUserId = async (
         await findBasket.save()
       ).populate("foods.food");
 
-      // const savedBasket = await (
-      //   await findBasket.save()
-      // ).populate("foods.food");
-
       console.log("ChangedFoods", savedBasket);
 
       res.status(200).json({
@@ -59,12 +56,12 @@ export const addToBasketByUserId = async (
   }
 };
 
-export const getFromBasketByUser = async (
+export const getBasket = async (
   req: IReq,
   res: Response,
   next: NextFunction
 ) => {
-  console.log("User", req.user);
+  console.log("GET BASKET !!!");
   try {
     const findBasket = await Basket.findOne({ user: req.user._id }).populate(
       "foods.food"
@@ -73,7 +70,7 @@ export const getFromBasketByUser = async (
     if (!findBasket) {
       throw new MyError("Сагсны мэдээлэл олдсонгүй", 400);
     }
-
+    console.log("GET BASKET WORKING", findBasket);
     res.status(200).json({
       message: "Хоолны мэдээлэл",
       basket: { foods: findBasket.foods, totalPrice: findBasket.totalPrice },
@@ -83,13 +80,7 @@ export const getFromBasketByUser = async (
   }
 };
 
-export const updateBasket = async (
-  req: IReq,
-  res: Response,
-  next: NextFunction
-) => {};
-
-export const deleteFromBasketByUser = async (
+export const deleteBasketFood = async (
   req: IReq,
   res: Response,
   next: NextFunction
@@ -118,6 +109,26 @@ export const deleteFromBasketByUser = async (
       message: "Хоолыг сагснаас хаслаа.",
       basket: { foods: savedBasket.foods, totalPrice: savedBasket.totalPrice },
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteBasket = async (
+  req: IReq,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { basketId } = req.params;
+    const basket = await Basket.findByIdAndDelete(basketId);
+    if (!basket) {
+      throw new MyError(`Cannot found ${basketId}-id basket table `, 400);
+    }
+    await basket?.save();
+    res
+      .status(200)
+      .json({ message: `Deleted this ${basketId}-id basket`, basket });
   } catch (error) {
     next(error);
   }

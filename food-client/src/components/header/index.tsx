@@ -33,7 +33,7 @@ export const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [drawer, setDrawer] = useState(false);
-  const { baskets }: any = useContext(BasketContext);
+  const { basket }: any = useContext(BasketContext);
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -143,7 +143,7 @@ export const Header = () => {
             <Box sx={{ px: 2 }}>
               <IconButton onClick={handleOpenDrawer} style={{ color: "black" }}>
                 <Badge
-                  badgeContent={baskets?.foods?.length}
+                  badgeContent={basket?.foods?.length}
                   color="success"
                   sx={{ marginLeft: 2 }}
                 >

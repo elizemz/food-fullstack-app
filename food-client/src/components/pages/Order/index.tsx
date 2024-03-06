@@ -19,7 +19,7 @@ import * as yup from "yup";
 
 const duureg = ["Bayngol", "Songinohairhan"];
 
-const BasketPage = () => {
+const OrderPage = () => {
   return (
     <Container>
       <Box
@@ -45,4 +45,4 @@ const BasketPage = () => {
   );
 };
 
-export default BasketPage;
+export default OrderPage;

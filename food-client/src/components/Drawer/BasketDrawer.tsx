@@ -12,13 +12,14 @@ import { useRouter } from "next/navigation";
 import { BasketContext } from "@/context";
 import DrawerCard from "./BasketCard";
 
-type Props = {
+type IDrawerProps = {
   open: boolean;
   handleClose: () => void;
 };
 
-export const BasketDrawerProp = ({ open, handleClose }: Props) => {
-  const { baskets, loading } = useContext(BasketContext);
+export const BasketDrawerProp = ({ open, handleClose }: IDrawerProps) => {
+  const { basket, loading } = useContext(BasketContext);
+  console.log("BaskAtDrawer", basket);
 
   const router = useRouter();
 
@@ -26,7 +27,7 @@ export const BasketDrawerProp = ({ open, handleClose }: Props) => {
     router.push("/order"), handleClose();
   };
 
-  const sum = baskets?.foods
+  const sum = basket?.foods
     ?.map((food: any) => food?.food?.price * food.count)
     .reduce((a: any, b: any) => a + b, 0);
   return (
@@ -38,7 +39,7 @@ export const BasketDrawerProp = ({ open, handleClose }: Props) => {
         handleClose();
       }}
     >
-      <Box width="590px" textAlign="center">
+      <Box width="584px" textAlign="center">
         <Grid
           container
           sx={{
@@ -66,7 +67,7 @@ export const BasketDrawerProp = ({ open, handleClose }: Props) => {
             </Typography>
           </Grid>
         </Grid>
-        {!baskets?.foods && (
+        {!basket?.foods && (
           <Stack height={"90%"} justifyContent={"center"} alignItems={"center"}>
             <Box
               width={200}
@@ -78,10 +79,10 @@ export const BasketDrawerProp = ({ open, handleClose }: Props) => {
             </Typography>
           </Stack>
         )}
-        <Box sx={{ marginTop: "", backgroundColor: "black" }}>
-          {baskets?.foods && (
+        <Box sx={{ marginTop: "", backgroundColor: "white" }}>
+          {basket?.foods && (
             <DrawerCard
-              baskets={baskets}
+              basket={basket}
               loading={loading}
               changeOnclick={changeOnclick}
               sum={sum}

@@ -13,7 +13,8 @@ type Props = {
 };
 
 export const BasketFoods = ({ food, foodCount }: any) => {
-  const { deleteBasket, updateFoodBasket } = useContext(BasketContext);
+  console.log("FFF", food);
+  const { deleteBasketFood, updateFoodBasket } = useContext(BasketContext);
   const [count, setCount] = React.useState(foodCount);
 
   console.log("Drawer food =====>", food);
@@ -36,7 +37,7 @@ export const BasketFoods = ({ food, foodCount }: any) => {
   };
 
   const handleDelete = (value: any) => {
-    deleteBasket(value);
+    deleteBasketFood(value);
   };
 
   return (

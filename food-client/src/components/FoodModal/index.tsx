@@ -34,7 +34,7 @@ interface IModalProps {
 }
 
 export const CardModal = ({ food, handleClose, open }: IModalProps) => {
-  const { addBasket, loading }: any = useContext(BasketContext);
+  const { addToBasket, loading }: any = useContext(BasketContext);
   const [count, setCount] = useState(1);
 
   const handleCount = (operation: string) => {
@@ -46,7 +46,7 @@ export const CardModal = ({ food, handleClose, open }: IModalProps) => {
   };
 
   const handleSave = () => {
-    addBasket({
+    addToBasket({
       foodId: food._id,
       quantity: count,
       totalPrice: count * food.price,

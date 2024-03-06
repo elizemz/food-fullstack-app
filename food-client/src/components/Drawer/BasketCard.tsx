@@ -1,31 +1,41 @@
-import { Grid, Stack, Typography } from "@mui/material";
+import { Grid, Stack, Typography, Box, Divider } from "@mui/material";
 import React from "react";
 import { BasketFoods } from "./BasketFood";
 import { Button } from "../pages";
-import { BasketContext } from "@/context";
 
 type Props = {
-  baskets: any;
+  basket: any;
   loading: boolean;
   changeOnclick: () => void;
   sum: number;
 };
 
-const DrawerCard = ({ baskets, loading, changeOnclick, sum }: Props) => {
+const DrawerCard = ({ basket, loading, changeOnclick, sum }: Props) => {
   return (
-    <Stack>
-      {baskets?.foods?.map((food: any) => (
-        <BasketFoods key={food._id} food={food.food} foodCount={food.count} />
-      ))}
-
+    <Stack
+      direction={"column"}
+      height={"93%"}
+      width={"100%"}
+      justifyContent={"space-between"}
+    >
+      <Box
+        alignSelf={"center"}
+        height={"100%"}
+        width={"100%"}
+        overflow={"auto"}
+      >
+        {basket?.foods?.map((food: any) => (
+          <BasketFoods key={food._id} food={food.food} foodCount={food.count} />
+        ))}
+      </Box>
       <Grid
+        width={"100%"}
         container
-        position={"sticky"}
-        bottom={0}
-        boxShadow={6}
-        bgcolor={""}
+        boxShadow={3}
+        bgcolor={"white"}
         py={10}
         px={5}
+        sx={{ position: "absolute", bottom: "0" }}
       >
         <Grid
           item

@@ -31,9 +31,9 @@ interface IBasketObject {
 
 interface IBasketContext {
   loading: boolean;
-  baskets: IBasketObject | null;
-  addBasket: (foodItem: any) => Promise<void>;
-  deleteBasket: (food: any) => Promise<void>;
+  basket: IBasketObject | null;
+  addToBasket: (foodItem: any) => Promise<void>;
+  deleteBasketFood: (food: any) => Promise<void>;
   updateFoodBasket: (foodItem: any) => Promise<void>;
 }
 
@@ -42,7 +42,7 @@ export const BasketContext = createContext({} as IBasketContext);
 const BasketProvider = ({ children }: PropsWithChildren) => {
   const { token, user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
-  const [baskets, setBaskets] = useState<IBasketObject | null>(null);
+  const [basket, setBasket] = useState<IBasketObject | null>(null);
   const [refresh, setRefresh] = useState(false);
 
   const createReq = async (foodItem: any) => {
@@ -63,25 +63,22 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
       if (token) {
         const {
           data: { basket },
-        } = await axios.get("/basket/", {
+        } = await axios.get("http://localhost:8000/basket/", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("B", basket);
-        setBaskets({ ...basket });
+        setBasket({ ...basket });
       }
     } catch (error: any) {
       alert("Error" + error.message);
     }
   };
 
-  console.log("getallbaskets", baskets);
-
-  const addBasket = async (foodItem: any) => {
+  const addToBasket = async (foodItem: any) => {
     console.log("Food", foodItem);
     try {
       const { basket, message } = await createReq(foodItem);
       console.log("RES", basket);
-      setBaskets({ ...basket });
+      setBasket({ ...basket });
       toast.success(message);
       setLoading(false);
       setRefresh(!refresh);
@@ -95,7 +92,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     try {
       const { basket } = await createReq(foodItem);
       console.log("RES", basket);
-      setBaskets({ ...basket });
+      setBasket({ ...basket });
       setLoading(false);
       setRefresh(!refresh);
     } catch (error: any) {
@@ -103,14 +100,14 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const deleteBasket = async (value: any) => {
+  const deleteBasketFood = async (value: any) => {
     try {
       setLoading(true);
 
       if (user) {
         const {
           data: { basket },
-        } = await axios.delete("/basket/" + value, {
+        } = await axios.delete("http://localhost:8000/basket/" + value, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -129,7 +126,13 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <BasketContext.Provider
-      value={{ loading, baskets, addBasket, deleteBasket, updateFoodBasket }}
+      value={{
+        loading,
+        basket,
+        addToBasket,
+        deleteBasketFood,
+        updateFoodBasket,
+      }}
     >
       {children}
     </BasketContext.Provider>

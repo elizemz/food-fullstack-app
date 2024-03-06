@@ -36,7 +36,7 @@ export const FoodCard = ({ food }: IFoodProps) => {
     <Grid item xs={12} sm={6} md={4} lg={3} justifyContent="center">
       <Card
         sx={{
-          maxWidth: 282,
+          width: 282,
           margin: "20px auto",
           border: "none",
           boxShadow: "none",
@@ -49,7 +49,7 @@ export const FoodCard = ({ food }: IFoodProps) => {
               sx={{ borderRadius: 2 }}
               component="img"
               height={150}
-              image={food?.img}
+              src={food?.img}
               alt="food img"
               onClick={() => handleOpen()}
             />
