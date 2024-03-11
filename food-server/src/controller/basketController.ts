@@ -20,14 +20,14 @@ export const addToBasket = async (
           foods: [
             {
               food: req.body.foodId,
-              qty: req.body.quantity,
+              count: req.body.quantity,
             },
           ],
           totalPrice: req.body.totalPrice,
         })
       ).populate("foods.food");
       console.log("BASK", basket);
-      res.status(200).json({ message: "Хоол амжилттай нэмлээ-1", basket });
+      res.status(200).json({ message: "Added food v.1", basket });
     } else {
       console.log("BFOODS", findBasket);
       const findIndex = findBasket.foods.findIndex(
@@ -36,7 +36,10 @@ export const addToBasket = async (
       console.log("Find", findIndex);
 
       if (findIndex !== -1) {
-        findBasket.foods[findIndex].qty = Number(req.body.quantity);
+        findBasket.foods[findIndex].count = Number(req.body.quantity);
+        findBasket.totalPrice = Number(req.body.totalPrice);
+      } else {
+        findBasket.foods.push(req.body.foods);
         findBasket.totalPrice = Number(req.body.totalPrice);
       }
 
@@ -44,10 +47,10 @@ export const addToBasket = async (
         await findBasket.save()
       ).populate("foods.food");
 
-      console.log("ChangedFoods", savedBasket);
+      console.log("Changed Foods", savedBasket);
 
       res.status(200).json({
-        message: "Хоол амжилттай нэмлээ-2",
+        message: "Added food v.2",
         basket: { foods: savedBasket.foods, totalPrice: findBasket.totalPrice },
       });
     }
@@ -61,18 +64,18 @@ export const getBasket = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("GET BASKET !!!");
+  console.log("GOT BASKET");
   try {
     const findBasket = await Basket.findOne({ user: req.user._id }).populate(
       "foods.food"
     );
 
     if (!findBasket) {
-      throw new MyError("Сагсны мэдээлэл олдсонгүй", 400);
+      throw new MyError("Could not find basket information.", 400);
     }
     console.log("GET BASKET WORKING", findBasket);
     res.status(200).json({
-      message: "Хоолны мэдээлэл",
+      message: "Food info.",
       basket: { foods: findBasket.foods, totalPrice: findBasket.totalPrice },
     });
   } catch (error) {
@@ -95,7 +98,7 @@ export const deleteBasketFood = async (
       "foods.food"
     );
     if (!findBasket) {
-      throw new MyError("Сагсны мэдээлэл олдсонгүй", 400);
+      throw new MyError("Could not find basket information.", 400);
     }
     const findIndex = findBasket.foods.findIndex(
       (el) => el.food.toString() === foodId
@@ -106,7 +109,7 @@ export const deleteBasketFood = async (
     }
     const savedBasket = await (await findBasket.save()).populate("foods.food");
     res.status(200).json({
-      message: "Хоолыг сагснаас хаслаа.",
+      message: "Deleted food from basket.",
       basket: { foods: savedBasket.foods, totalPrice: savedBasket.totalPrice },
     });
   } catch (error) {

@@ -13,7 +13,7 @@ const basketSchema = new Schema({
         ref: "Food",
         required: true,
       },
-      qty: {
+      count: {
         type: Number,
         required: true,
       },
